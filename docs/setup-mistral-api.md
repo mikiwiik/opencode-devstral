@@ -37,3 +37,5 @@ To default to Mistral's hosted model, edit `~/.config/opencode/opencode.json` an
 | Context window | 256k tokens |
 
 Currently offered with a free introductory tier. Same model weights as self-hosted Devstral Small 2.
+
+> **Model version**: we use `devstral-small-latest` (rolling alias) to stay on the latest version. At time of benchmarking (March 2026), this resolved to `devstral-small-2-25-12`.
