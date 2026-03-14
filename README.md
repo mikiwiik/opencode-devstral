@@ -26,18 +26,9 @@ Verda is ~2.5x faster at generation. Local supports larger context windows and i
 
 ## Quick start
 
-1. Follow a setup guide above (one or more)
-2. Install the OpenCode config globally so it works across all projects:
-   ```sh
-   cp opencode.example.json ~/.config/opencode/opencode.json
-   # edit: fill in your API URLs/keys
-   ```
-3. Set API keys for your providers (add to `~/.zshrc` or `~/.bashrc`):
-   ```sh
-   export VERDA_API_KEY="your-verda-key"       # if using Verda
-   export MISTRAL_API_KEY="your-mistral-key"   # if using Mistral API
-   ```
-4. Run `opencode` from any project directory
+1. [Install OpenCode and global config](docs/prerequisites.md)
+2. Follow one or more provider setup guides above
+3. Run `opencode` from any project directory
 
 ## Model
 
