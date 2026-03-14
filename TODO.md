@@ -2,11 +2,17 @@
 
 ## High priority
 
+- [ ] Evaluate FP8 performance impact on current GPU
+  - Current GPU lacks native FP8 — vLLM falls back to Marlin kernel (slower)
+  - Native FP8 requires H100/H200/B200
+  - Test: measure tokens/s on current instance, compare with H100 ($0.88/h spot)
+  - If too slow, upgrade to H100 80GB (native FP8 + 80GB VRAM) or H200 141GB
+
 - [ ] Select optimal Verda GPU instance for Devstral Small 2
-  - Current: A100 40GB (40GB VRAM, $0.28/h spot) — minimum viable
-  - Consider: A100 80GB ($0.50/h), L40S 48GB ($0.35/h), RTX PRO 6000 96GB ($0.79/h)
+  - Current GPU: ~34GB VRAM, no native FP8, model weights use 24 GiB leaving only ~10 GiB for KV cache
+  - Consider: H100 80GB ($0.88/h, native FP8), A100 80GB ($0.50/h), A100 40GB ($0.28/h)
   - Benchmark: compare inference speed (tokens/s) vs cost across tiers
-  - FP8 on A100 80GB likely the sweet spot for speed vs cost
+  - Key tradeoff: native FP8 (H100+) = faster inference, non-FP8 GPUs = cheaper but slower
 
 ## Medium priority
 
