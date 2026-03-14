@@ -1,6 +1,6 @@
 # Prerequisites & OpenCode Setup
 
-Shared setup steps for all deployment options (Verda, Ollama, Mistral API).
+Shared setup steps for all deployment options ([Verda](https://verda.com), [Ollama](https://ollama.com), [Mistral API](https://console.mistral.ai)).
 
 ## 1. Install OpenCode and dependencies
 
@@ -53,7 +53,9 @@ Select your model from the picker. Use the setup guides for provider-specific co
 
 ## References
 
-- [Devstral Small 2 on HuggingFace](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512)
-- [Devstral Small 2 docs (Mistral)](https://docs.mistral.ai/models/devstral-small-2-25-12)
-- [OpenCode docs](https://opencode.ai/docs/)
+- [OpenCode](https://opencode.ai) — [docs](https://opencode.ai/docs/)
+- [Devstral Small 2](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512) — [Mistral docs](https://docs.mistral.ai/models/devstral-small-2-25-12)
+- [Ollama](https://ollama.com) — local model serving
+- [Verda](https://verda.com) (formerly [DataCrunch](https://datacrunch.io)) — GPU cloud, `containers.datacrunch.io` URLs are Verda's container API
+- [vLLM](https://github.com/vllm-project/vllm) — [docs](https://docs.vllm.ai) — model serving engine used on Verda
 - [Mistral local/offline docs](https://docs.mistral.ai/mistral-vibe/local)
