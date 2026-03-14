@@ -22,7 +22,7 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 | Setting | Value |
 |---|---|
 | Container image | `docker.io/vllm/vllm-openai` (tag: see below) |
-| GPU | A100 40GB ($0.28/h spot) or better — see TODO.md |
+| GPU | A100 80GB ($0.43/h spot) recommended — see below |
 | HTTP port | `8000` |
 | Healthcheck | port `8000`, path `/health` |
 | Public access | On |
@@ -46,10 +46,10 @@ vLLM downloads model weights from HuggingFace at container startup. Devstral Sma
 **Start command** (toggle on, select CMD):
 
 ```
---model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len 32768 --tool-call-parser mistral --enable-auto-tool-choice
+--model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len 65536 --tool-call-parser mistral --enable-auto-tool-choice
 ```
 
-> **Why `--max-model-len 32768`?** Without it, vLLM defaults to the model's full 393k context, which needs ~60 GiB KV cache — far more than a single GPU has free after loading model weights. 32k is plenty for coding tasks. Increase if you have a larger GPU (A100 80GB can handle ~64k+).
+> **Why `--max-model-len 65536`?** Without it, vLLM defaults to the model's full 393k context, which needs ~60 GiB KV cache. Model weights take ~24 GiB, so an A100 80GB has ~50 GiB free for KV cache — enough for 65k context. On a smaller A100 40GB, reduce to `32768`.
 
 Wait for the healthcheck to go green.
 

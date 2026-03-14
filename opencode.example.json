@@ -13,7 +13,7 @@
         "mistralai/Devstral-Small-2-24B-Instruct-2512": {
           "name": "Devstral Small 2 (Verda)",
           "limit": {
-            "context": 32768,
+            "context": 65536,
             "output": 8192
           }
         }
