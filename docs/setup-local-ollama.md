@@ -100,17 +100,6 @@ opencode
 
 Devstral on Ollama should be pre-selected as the default model.
 
-## Local vs Verda performance
-
-| | Local (M3 Max Pro 128GB) | Verda (A100 40GB) |
-|---|---|---|
-| Cost | Free | ~$0.28/h spot |
-| Speed | ~5-15 tok/s (estimate) | ~50 tok/s |
-| Latency | No network overhead | Network round-trip |
-| Context | Limited by RAM | Limited by VRAM |
-
-Local is good for quick experiments and offline work. For sustained coding sessions, the Verda GPU is significantly faster. See [setup-verda.md](setup-verda.md) for the remote setup.
-
 ## Troubleshooting
 
 **Connection refused**
