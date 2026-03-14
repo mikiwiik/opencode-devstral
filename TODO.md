@@ -28,6 +28,14 @@
   - Test quantization variants (Q4_K_M vs Q8) — trade quality for speed
   - Benchmark with `benchmark.sh` pointing at `localhost:11434`
 
+- [ ] Test running Devstral Small 2 locally on Dell Pro Max GB10
+  - NVIDIA GB10 Grace Blackwell Superchip, 128GB unified memory
+  - **Use vLLM, not Ollama** — Blackwell has native FP8 support which vLLM exploits; Ollama (llama.cpp) doesn't leverage FP8 compute
+  - Memory bandwidth (~273 GB/s LPDDR5X) is lower than M3 Max Pro (~400 GB/s) — raw Ollama tok/s may actually be slower than Mac
+  - The win is FP8 + CUDA optimizations via vLLM/TensorRT-LLM, which could match or beat Verda A100 80GB (~59 tok/s)
+  - Benchmark: compare vLLM on GB10 vs Ollama on M3 Max Pro vs Verda A100 80GB
+  - Use same start command as Verda: `--model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len 98304 --tool-call-parser mistral --enable-auto-tool-choice`
+
 ## Medium priority
 
 - [ ] Try alternative coding tools
