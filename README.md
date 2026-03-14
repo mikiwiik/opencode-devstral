@@ -26,16 +26,16 @@ All three use the same model weights. The [OpenCode config](opencode.example.jso
 
 Measured with [`benchmark.sh`](benchmark.sh) — fizzbuzz prompt, `max_tokens=512`.
 
-| | Local (M3 Max Pro 128GB) | Verda A100 40GB | Verda A100 80GB | Mistral API |
+| | Local (M3 Max Pro 128GB, 32k ctx) | Verda A100 40GB | Verda A100 80GB | Mistral API |
 |---|---|---|---|---|
 | Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | ~193 tok/s |
 | Cost | Free | ~$0.28/h spot | ~$0.43/h spot | ~$0.10/M in, $0.30/M out |
 
-> Benchmark config (March 2026): A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`, local with `num_ctx 32768`. Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12`).
+> Benchmark config (March 2026): A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`, local with `num_ctx 32768` (no q8_0 KV cache). Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12`).
 
 ### Real-world: codebase review
 
-Reviewed a [5.7k line Python/FastAPI project](https://github.com/mikiwiik/data-serving-poc). Full results in [docs/benchmark-code-review.md](docs/benchmark-code-review.md).
+Reviewed a [5.7k line Python/FastAPI project](https://github.com/mikiwiik/data-serving-poc). Full results in [docs/benchmark-code-review.md](docs/benchmark-code-review.md). Local used `num_ctx 98304` with `OLLAMA_KV_CACHE_TYPE=q8_0` (`ollama-start --large-ctx`).
 
 | | Mistral API | Verda A100 80GB | Local (98k ctx) |
 |---|---|---|---|
@@ -47,7 +47,7 @@ Mistral API is ~120x faster than local. Quality is comparable — same model wei
 
 ## Local tuning (Apple Silicon)
 
-FlashAttention enabled by default (~23 tok/s, no overhead). For large context tasks (codebase review), use `ollama-start --large-ctx` to enable q8_0 KV cache quantization — trades ~5% speed for 2x KV cache capacity. See [`scripts/ollama-start.sh`](scripts/ollama-start.sh).
+The [`ollama-start`](scripts/ollama-start.sh) script includes optimizations (FlashAttention, keep-alive) that showed minor performance improvements in benchmarking on M3 Max Pro 128GB. Use `ollama-start --large-ctx` for large context tasks like codebase review — enables q8_0 KV cache quantization, trading ~5% speed for 2x KV cache capacity.
 
 ## See also
 
