@@ -1,27 +1,16 @@
-# Local Setup: Devstral + Ollama + OpenCode
+# Local Setup: Devstral + Ollama
 
-Run Devstral Small 2 (24B) locally via Ollama on macOS Apple Silicon, connect OpenCode as a coding agent.
+Run Devstral Small 2 (24B) locally via Ollama on macOS Apple Silicon.
 
-## Prerequisites
-
+**Prerequisites**: [Install OpenCode and global config](prerequisites.md) first. You also need:
 - Apple Silicon Mac with 128 GB unified memory
 - Homebrew installed
 
+## 1. Install and start Ollama
+
 ```sh
-# optional but recommended — used by OpenCode for search
-brew install fzf ripgrep
-
-# check if already installed
-which ollama && ollama --version
-which opencode && opencode --version
-
-# install Ollama and OpenCode
 brew install --cask ollama
-brew install opencode
-# or: curl -fsSL https://opencode.ai/install | bash
 ```
-
-## 1. Start Ollama and pull Devstral Small 2
 
 Install the optimized start script to your PATH:
 
@@ -29,7 +18,7 @@ Install the optimized start script to your PATH:
 ln -sf "$(pwd)/scripts/ollama-start.sh" ~/.local/bin/ollama-start
 ```
 
-Then start Ollama with tuned settings and pull the model:
+Start Ollama and pull the model:
 
 ```sh
 ollama-start &
@@ -38,7 +27,7 @@ ollama-start &
 ollama pull devstral-small-2
 ```
 
-The script enables FlashAttention, KV cache quantization (q8_0), and keeps models loaded between sessions. See [`scripts/ollama-start.sh`](../scripts/ollama-start.sh) for details.
+The script enables FlashAttention and keeps models loaded between sessions. Use `ollama-start --large-ctx` for q8_0 KV cache quantization on large context tasks. See [`scripts/ollama-start.sh`](../scripts/ollama-start.sh).
 
 > **Optional**: unlock more GPU memory (resets on boot):
 > ```sh
@@ -52,9 +41,9 @@ Verify:
 ollama list | grep devstral
 ```
 
-## 2. Set context window to match Verda
+## 2. Set context window
 
-Ollama defaults to a small context window (2048-4096 tokens). The Verda setup uses `--max-model-len 32768`, so we match that for a fair comparison:
+Ollama defaults to a small context window (2048-4096 tokens). Create a variant with 32k context:
 
 ```sh
 ollama run devstral-small-2
@@ -63,7 +52,7 @@ ollama run devstral-small-2
 /bye
 ```
 
-This creates a `devstral-small-2-32k` variant. Use this model name in the steps below.
+This creates a `devstral-small-2-32k` variant used by the OpenCode config.
 
 ## 3. Test the endpoint
 
@@ -81,17 +70,9 @@ curl -s -X POST http://localhost:11434/v1/chat/completions \
 
 No auth token needed — Ollama runs locally without authentication.
 
-## 4. Connect OpenCode
+## 4. Set default model (optional)
 
-Install the config globally (recommended — works across all projects):
-
-```sh
-cp opencode.example.json ~/.config/opencode/opencode.json
-```
-
-To default to the local model, edit `~/.config/opencode/opencode.json` and change the top-level `"model"` to `"ollama/devstral-small-2-32k"`. Then run `opencode` from any project.
-
-See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers). A project-local `opencode.json` overrides the global config if needed.
+To default to the local model, edit `~/.config/opencode/opencode.json` and change the top-level `"model"` to `"ollama/devstral-small-2-32k"`.
 
 ## Troubleshooting
 
@@ -107,11 +88,4 @@ See [`opencode.example.json`](../opencode.example.json) for the full config (inc
 - Known issue with multi-turn tool call sequences ([ollama/ollama#11296](https://github.com/ollama/ollama/issues/11296)). If tool calls break mid-conversation, try starting a new session.
 
 **Slow generation**
-- Expected on Apple Silicon — GPU memory bandwidth is the bottleneck for large models. Consider using the [Verda remote setup](setup-verda.md) for faster inference.
-
-## References
-
-- [Devstral Small 2 on HuggingFace](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512)
-- [Devstral on Ollama](https://ollama.com/library/devstral-small-2)
-- [OpenCode docs](https://opencode.ai/docs/)
-- [Mistral local/offline docs](https://docs.mistral.ai/mistral-vibe/local)
+- Expected on Apple Silicon — GPU memory bandwidth is the bottleneck for large models.

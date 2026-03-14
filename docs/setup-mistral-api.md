@@ -1,17 +1,8 @@
-# Mistral API Setup: Devstral + OpenCode
+# Mistral API Setup: Hosted Devstral
 
 Run Devstral Small 2 (24B) via Mistral's hosted API — no GPU infrastructure to manage.
 
-## Prerequisites
-
-```sh
-# check if already installed
-which opencode && opencode --version
-
-# install OpenCode
-brew install opencode
-# or: curl -fsSL https://opencode.ai/install | bash
-```
+**Prerequisites**: [Install OpenCode and global config](prerequisites.md) first.
 
 ## 1. Get a Mistral API key
 
@@ -33,22 +24,9 @@ curl -s -X POST https://api.mistral.ai/v1/chat/completions \
   }' | jq '.usage'
 ```
 
-## 3. Connect OpenCode
+## 3. Set default model (optional)
 
-Install the config globally (recommended):
-
-```sh
-cp opencode.example.json ~/.config/opencode/opencode.json
-```
-
-To default to Mistral's hosted model, edit `~/.config/opencode/opencode.json` and change the top-level `"model"` to `"mistral/devstral-small-latest"`. Then set your API key:
-
-```sh
-# add to your ~/.zshrc or ~/.bashrc
-export MISTRAL_API_KEY="your-mistral-api-key"
-```
-
-Run `opencode` from any project. See [`opencode.example.json`](../opencode.example.json) for the full config.
+To default to Mistral's hosted model, edit `~/.config/opencode/opencode.json` and change the top-level `"model"` to `"mistral/devstral-small-latest"`.
 
 ## Pricing
 
@@ -59,10 +37,3 @@ Run `opencode` from any project. See [`opencode.example.json`](../opencode.examp
 | Context window | 256k tokens |
 
 Currently offered with a free introductory tier. Same model weights as self-hosted Devstral Small 2.
-
-## References
-
-- [Devstral Small 2 docs](https://docs.mistral.ai/models/devstral-small-2-25-12)
-- [Mistral pricing](https://mistral.ai/pricing)
-- [Mistral console](https://console.mistral.ai)
-- [OpenCode docs](https://opencode.ai/docs/)
