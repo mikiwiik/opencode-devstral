@@ -1,10 +1,11 @@
 #!/bin/bash
-# Quick benchmark: measure tokens/s from vLLM or Ollama endpoint
+# Quick benchmark: measure tokens/s from any OpenAI-compatible endpoint
 # Usage: ./benchmark.sh <API_URL> [API_KEY] [MODEL]
 #
 # Examples:
 #   ./benchmark.sh https://containers.datacrunch.io/my-container dc_abc123
 #   ./benchmark.sh http://localhost:11434 "" devstral-small-2-32k
+#   ./benchmark.sh https://api.mistral.ai "$MISTRAL_API_KEY" devstral-small-latest
 
 
 if [ -z "$1" ]; then
