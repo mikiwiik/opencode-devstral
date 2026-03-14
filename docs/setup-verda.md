@@ -1,19 +1,8 @@
-# Verda + Devstral + OpenCode
+# Verda Setup: Devstral on Remote GPU
 
-Run Devstral Small 2 (24B) on a Verda GPU instance, connect OpenCode to it as a remote coding agent.
+Run Devstral Small 2 (24B) on a Verda GPU instance via vLLM.
 
-## Prerequisites
-
-- [Verda](https://verda.com) account with credits
-- OpenCode installed locally:
-  ```sh
-  # check if already installed
-  which opencode && opencode --version
-
-  # install via brew (or curl)
-  brew install opencode
-  # or: curl -fsSL https://opencode.ai/install | bash
-  ```
+**Prerequisites**: [Install OpenCode and global config](prerequisites.md) first. You also need a [Verda](https://verda.com) account with credits.
 
 ## 1. Deploy Devstral on Verda
 
@@ -96,28 +85,6 @@ curl -X POST https://containers.datacrunch.io/YOUR-CONTAINER/v1/chat/completions
   }'
 ```
 
-## 4. Connect OpenCode
+## 4. Configure your Verda URL
 
-Install the config globally (recommended — works across all projects):
-
-```sh
-cp opencode.example.json ~/.config/opencode/opencode.json
-# edit: replace <YOUR_VERDA_API_URL> with your container URL
-```
-
-Add your API key to your shell profile (`~/.zshrc` or `~/.bashrc`):
-
-```sh
-export VERDA_API_KEY="your-inference-api-key"
-```
-
-Then run `opencode` from any project. Devstral on Verda should be pre-selected as the default model.
-
-See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers). A project-local `opencode.json` overrides the global config if needed.
-
-## References
-
-- [Verda container docs](https://docs.verda.com/containers/tutorials/deploy-with-vllm-quick)
-- [Devstral Small 2 on HuggingFace](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512)
-- [OpenCode docs](https://opencode.ai/docs/)
-- [Mistral local/offline docs](https://docs.mistral.ai/mistral-vibe/local)
+Edit `~/.config/opencode/opencode.json`: replace `<YOUR_VERDA_API_URL>` with your container URL. Then run `opencode` from any project.
