@@ -13,6 +13,11 @@
   - Test with `"stream": true` — current benchmark shows TTFT ≈ total time (no streaming), streaming should give much faster first token
   - Compare across GPU tiers to inform instance selection
 
+- [ ] Benchmark a real-world codebase review task
+  - Run "review the current codebase" on the same project via both local and Verda
+  - Compare: time to complete, quality of review, context usage
+  - Test with different context sizes to find the sweet spot
+
 - [ ] Test different output token limits in OpenCode config
   - Current: 8192 — reasonable default for code generation
   - Try: 4096 (more input room), 16384 (longer code output)
