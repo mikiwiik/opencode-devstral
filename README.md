@@ -1,0 +1,94 @@
+# Verda + Devstral + OpenCode
+
+Run Devstral Small 2 (24B) on a Verda GPU instance, connect OpenCode to it as a remote coding agent.
+
+## Prerequisites
+
+- [Verda](https://verda.com) account with credits
+- OpenCode installed locally:
+  ```sh
+  # check if already installed
+  which opencode && opencode --version
+
+  # install via brew (or curl)
+  brew install opencode
+  # or: curl -fsSL https://opencode.ai/install | bash
+  ```
+
+## 1. Deploy Devstral on Verda
+
+Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deploy-with-vllm-quick) with these settings:
+
+| Setting | Value |
+|---|---|
+| Container image | `docker.io/vllm/vllm-openai` |
+| GPU | A100 40GB ($0.28/h spot) or better — see TODO.md |
+| HTTP port | `8000` |
+| Healthcheck | port `8000`, path `/health` |
+| Public access | On |
+
+**Environment variables:**
+
+| Key | Value |
+|---|---|
+| `HF_TOKEN` | *(optional — model is Apache 2.0, not gated, but avoids rate limits)* |
+
+**Start command:**
+
+```
+--model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --tool-call-parser mistral --enable-auto-tool-choice
+```
+
+Wait for the healthcheck to go green. Note your container's API URL.
+
+## 2. Test the endpoint
+
+```sh
+curl -X POST <YOUR_API_URL>/v1/chat/completions \
+  -H "Authorization: Bearer <YOUR_INFERENCE_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+    "messages": [{"role": "user", "content": "Hello"}],
+    "max_tokens": 64
+  }'
+```
+
+## 3. Connect OpenCode
+
+Create `opencode.json` in your project root:
+
+```json
+{
+  "provider": {
+    "verda": {
+      "id": "openai-compatible",
+      "options": {
+        "baseURL": "<YOUR_API_URL>/v1",
+        "apiKey": "<YOUR_INFERENCE_API_KEY>"
+      },
+      "models": {
+        "mistralai/Devstral-Small-2-24B-Instruct-2512": {
+          "maxTokens": 8192,
+          "contextWindow": 128000
+        }
+      }
+    }
+  }
+}
+```
+
+Then run:
+
+```sh
+opencode
+```
+
+Select the Verda/Devstral model from the model picker.
+
+## References
+
+- [Verda container docs](https://docs.verda.com/containers/tutorials/deploy-with-vllm-quick)
+- [Devstral Small 2 on HuggingFace](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512)
+- [OpenCode docs](https://opencode.ai/docs/)
+- [Mistral local/offline docs](https://docs.mistral.ai/mistral-vibe/local)
