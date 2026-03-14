@@ -39,7 +39,9 @@ Check [vLLM releases](https://github.com/vllm-project/vllm/releases) for newer v
 
 | Key | Value |
 |---|---|
-| `HF_TOKEN` | *(optional — model is Apache 2.0, not gated, but avoids rate limits)* |
+| `HF_TOKEN` | *(optional — see below)* |
+
+vLLM downloads model weights from HuggingFace at container startup. Devstral Small 2 is public (Apache 2.0, no login required), so you **don't need a token** for a first deploy. Only set `HF_TOKEN` (a [HuggingFace access token](https://huggingface.co/settings/tokens)) if you hit download rate limits from frequent redeployments.
 
 **Start command:**
 
