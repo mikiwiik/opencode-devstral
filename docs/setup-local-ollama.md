@@ -100,6 +100,7 @@ See [`opencode.example.json`](../opencode.example.json) for the full config (inc
 - Verify: `curl http://localhost:11434/api/tags`
 
 **Model not appearing in OpenCode**
+- Start Ollama **before** OpenCode — OpenCode checks provider availability at launch. Restart OpenCode if you started Ollama after.
 - The model key in `opencode.json` must exactly match `ollama list` output
 
 **Tool calls not working**
