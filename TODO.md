@@ -20,6 +20,11 @@
   - Test with `"stream": true` — current benchmark shows TTFT ≈ total time (no streaming), streaming should give much faster first token
   - Compare across GPU tiers to inform instance selection
 
+- [ ] Test different output token limits in OpenCode config
+  - Current: 8192 — reasonable default for code generation
+  - Try: 4096 (more input room), 16384 (longer code output)
+  - Measure: does reducing output improve codebase review? Does increasing it help code generation?
+
 - [ ] Tune local Ollama settings for best performance
   - Test different `num_ctx` values (8k, 16k, 32k) — smaller context = faster inference
   - Test quantization variants (Q4_K_M vs Q8) — trade quality for speed
