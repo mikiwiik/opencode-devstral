@@ -16,7 +16,8 @@
 
 - [ ] Expand benchmark script for proper performance evaluation
   - Current: simple curl + jq one-shot (`benchmark.sh`)
-  - Add: multiple runs, average tokens/s, TTFT, streaming measurement
+  - Add: multiple runs, average tokens/s, TTFT
+  - Test with `"stream": true` — current benchmark shows TTFT ≈ total time (no streaming), streaming should give much faster first token
   - Compare across GPU tiers to inform instance selection
 
 - [ ] Run Devstral Small 2 locally on Ollama as baseline
