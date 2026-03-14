@@ -68,37 +68,19 @@ No auth token needed — Ollama runs locally without authentication.
 
 ## 4. Connect OpenCode
 
-Create `opencode.json` in your project root:
+Copy the example config:
 
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "model": "ollama/devstral-small-2-32k",
-  "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama (local)",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "devstral-small-2-32k": {
-          "name": "Devstral Small 2 24B (32K ctx)",
-          "tools": true
-        }
-      }
-    }
-  }
-}
+```sh
+cp opencode.example.json opencode.json
 ```
 
-Then run:
+To default to the local model, edit `opencode.json` and change the top-level `"model"` to `"ollama/devstral-small-2-32k"`. Then run:
 
 ```sh
 opencode
 ```
 
-Devstral on Ollama should be pre-selected as the default model.
+See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers).
 
 ## Troubleshooting
 
