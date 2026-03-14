@@ -87,21 +87,33 @@ curl -X POST https://containers.datacrunch.io/YOUR-CONTAINER/v1/chat/completions
 
 ## 4. Connect OpenCode
 
+Set your API key:
+
+```sh
+export VERDA_API_KEY="your-inference-api-key"
+```
+
 Create `opencode.json` in your project root:
 
 ```json
 {
+  "$schema": "https://opencode.ai/config.json",
+  "model": "verda/mistralai/Devstral-Small-2-24B-Instruct-2512",
   "provider": {
     "verda": {
-      "id": "openai-compatible",
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Verda (Devstral)",
       "options": {
         "baseURL": "<YOUR_API_URL>/v1",
-        "apiKey": "<YOUR_INFERENCE_API_KEY>"
+        "apiKey": "{env:VERDA_API_KEY}"
       },
       "models": {
         "mistralai/Devstral-Small-2-24B-Instruct-2512": {
-          "maxTokens": 8192,
-          "contextWindow": 128000
+          "name": "Devstral Small 2",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
         }
       }
     }
@@ -115,7 +127,7 @@ Then run:
 opencode
 ```
 
-Select the Verda/Devstral model from the model picker.
+Devstral on Verda should be pre-selected as the default model.
 
 ## References
 
