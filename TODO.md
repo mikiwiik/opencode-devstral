@@ -20,10 +20,6 @@
   - Test with `"stream": true` — current benchmark shows TTFT ≈ total time (no streaming), streaming should give much faster first token
   - Compare across GPU tiers to inform instance selection
 
-- [ ] Run Devstral Small 2 locally on Ollama as baseline
-  - `ollama pull devstral-small-2` on M3 Max Pro 128GB
-  - Compare tokens/s local vs Verda to quantify the remote GPU benefit
-
 - [ ] Tune local Ollama settings for best performance
   - Test different `num_ctx` values (8k, 16k, 32k) — smaller context = faster inference
   - Test quantization variants (Q4_K_M vs Q8) — trade quality for speed
