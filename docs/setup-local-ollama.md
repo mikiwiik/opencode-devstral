@@ -43,16 +43,23 @@ ollama list | grep devstral
 
 ## 2. Set context window
 
-Ollama defaults to a small context window (2048-4096 tokens). Create a variant with 32k context:
+Ollama defaults to a small context window (2048-4096 tokens). Create variants with larger context:
 
 ```sh
+# 32k — good for code generation, fast
 ollama run devstral-small-2
 /set parameter num_ctx 32768
 /save devstral-small-2-32k
 /bye
+
+# 98k — good for codebase review, uses more memory
+ollama run devstral-small-2
+/set parameter num_ctx 98304
+/save devstral-small-2-98k
+/bye
 ```
 
-This creates a `devstral-small-2-32k` variant used by the OpenCode config.
+The OpenCode config references these variant names. Use 32k for quick tasks, 98k for large context work like codebase review.
 
 ## 3. Test the endpoint
 
