@@ -49,13 +49,32 @@ vLLM downloads model weights from HuggingFace at container startup. Devstral Sma
 --model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --tool-call-parser mistral --enable-auto-tool-choice
 ```
 
-Wait for the healthcheck to go green. Note your container's API URL.
+Wait for the healthcheck to go green.
 
-## 2. Test the endpoint
+## 2. Get your API URL and token
+
+1. **API URL**: go to your container's detail page — the base URL is shown in the top-left under "Containers API" (e.g., `https://containers.datacrunch.io/your-container-name/`)
+2. **Bearer token**: go to **Keys > Inference API Keys > Create** ([docs](https://docs.verda.com/inference/authorization)). Save the token — it won't be shown again.
+
+## 3. Test the endpoint
+
+**Quick test via Verda UI**: go to the **API** tab on your container's page. Append `v1/chat/completions` to the URL field, paste your bearer token into the Authorization header, and use this payload:
+
+```json
+{
+  "model": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+  "messages": [{"role": "user", "content": "Hello"}],
+  "max_tokens": 64
+}
+```
+
+Hit "Send Request" to verify the model responds.
+
+**Or via curl:**
 
 ```sh
-curl -X POST <YOUR_API_URL>/v1/chat/completions \
-  -H "Authorization: Bearer <YOUR_INFERENCE_API_KEY>" \
+curl -X POST https://containers.datacrunch.io/YOUR-CONTAINER/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_INFERENCE_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "mistralai/Devstral-Small-2-24B-Instruct-2512",
@@ -64,7 +83,7 @@ curl -X POST <YOUR_API_URL>/v1/chat/completions \
   }'
 ```
 
-## 3. Connect OpenCode
+## 4. Connect OpenCode
 
 Create `opencode.json` in your project root:
 
