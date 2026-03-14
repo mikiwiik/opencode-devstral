@@ -9,16 +9,18 @@ Run Devstral Small 2 (24B) as a coding agent via OpenCode. Two deployment option
 
 ## Performance comparison
 
-Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Small 2 (32k context).
+Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Small 2.
 
 | | Local (M3 Max Pro 128GB) | Verda (A100 40GB spot) |
 |---|---|---|
 | Cost | Free | ~$0.28/h |
 | Speed | ~23 tok/s | ~50 tok/s |
 | Latency | No network overhead | Network round-trip |
-| Context | Limited by RAM | Limited by VRAM |
+| Max context | ~128k (RAM limited) | ~32k (40GB VRAM limited) |
 
-Local is ~2x slower but free and offline. For sustained coding sessions, the remote GPU is noticeably faster.
+> **Benchmark config**: both setups used 32k context at time of measurement. Local can go much higher given 128GB unified memory. Verda is capped at 32k on A100 40GB (~10 GiB free for KV cache after model weights). A larger GPU (A100 80GB, H100) would allow more context on Verda.
+
+Verda is ~2x faster at generation, but the local setup supports much larger context windows — making it better suited for tasks like codebase review that require loading many files.
 
 ## Quick start
 
