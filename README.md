@@ -20,6 +20,8 @@ Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Sma
 
 > **Benchmark config**: both setups used 32k context at time of measurement. Local can go much higher given 128GB unified memory. Verda is capped at 32k on A100 40GB (~10 GiB free for KV cache after model weights). A larger GPU (A100 80GB, H100) would allow more context on Verda.
 
+> **Local tuning results**: FlashAttention enabled by default (~23 tok/s, no overhead). KV cache quantization (q8_0) available via `ollama-start --large-ctx` — trades ~5% speed for 2x KV cache capacity on large context tasks. See [`scripts/ollama-start.sh`](scripts/ollama-start.sh).
+
 Verda is ~2x faster at generation, but the local setup supports much larger context windows — making it better suited for tasks like codebase review that require loading many files.
 
 ## Quick start
