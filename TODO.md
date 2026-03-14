@@ -14,6 +14,15 @@
   - Benchmark: compare inference speed (tokens/s) vs cost across tiers
   - Key tradeoff: native FP8 (H100+) = faster inference, non-FP8 GPUs = cheaper but slower
 
+- [ ] Expand benchmark script for proper performance evaluation
+  - Current: simple curl + jq one-shot (`benchmark.sh`)
+  - Add: multiple runs, average tokens/s, TTFT, streaming measurement
+  - Compare across GPU tiers to inform instance selection
+
+- [ ] Run Devstral Small 2 locally on Ollama as baseline
+  - `ollama pull devstral-small-2` on M3 Max Pro 128GB
+  - Compare tokens/s local vs Verda to quantify the remote GPU benefit
+
 ## Medium priority
 
 - [ ] Try alternative coding tools
