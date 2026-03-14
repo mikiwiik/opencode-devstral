@@ -19,6 +19,23 @@
         }
       }
     },
+    "mistral": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Mistral API",
+      "options": {
+        "baseURL": "https://api.mistral.ai/v1",
+        "apiKey": "{env:MISTRAL_API_KEY}"
+      },
+      "models": {
+        "devstral-small-latest": {
+          "name": "Devstral Small 2 (Mistral API)",
+          "limit": {
+            "context": 256000,
+            "output": 8192
+          }
+        }
+      }
+    },
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
