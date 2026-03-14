@@ -21,11 +21,12 @@ brew install opencode
 # or: curl -fsSL https://opencode.ai/install | bash
 ```
 
-Launch the Ollama app — it starts the server on `http://localhost:11434`.
-
-## 1. Pull Devstral Small 2
+## 1. Start Ollama and pull Devstral Small 2
 
 ```sh
+# start the Ollama server (or launch the Ollama app)
+ollama serve &
+
 # ~16 GB download, requires Ollama 0.13.3+
 ollama pull devstral-small-2
 ```
