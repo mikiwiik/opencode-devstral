@@ -43,7 +43,7 @@ Check [vLLM releases](https://github.com/vllm-project/vllm/releases) for newer v
 
 vLLM downloads model weights from HuggingFace at container startup. Devstral Small 2 is public (Apache 2.0, no login required), so you **don't need a token** for a first deploy. Only set `HF_TOKEN` (a [HuggingFace access token](https://huggingface.co/settings/tokens)) if you hit download rate limits from frequent redeployments.
 
-**Start command:**
+**Start command** (toggle on, select CMD):
 
 ```
 --model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --tool-call-parser mistral --enable-auto-tool-choice
