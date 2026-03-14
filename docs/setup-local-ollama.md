@@ -23,13 +23,28 @@ brew install opencode
 
 ## 1. Start Ollama and pull Devstral Small 2
 
+Install the optimized start script to your PATH:
+
 ```sh
-# start the Ollama server (or launch the Ollama app)
-ollama serve &
+ln -sf "$(pwd)/scripts/ollama-start.sh" ~/.local/bin/ollama-start
+```
+
+Then start Ollama with tuned settings and pull the model:
+
+```sh
+ollama-start &
 
 # ~16 GB download, requires Ollama 0.13.3+
 ollama pull devstral-small-2
 ```
+
+The script enables FlashAttention, KV cache quantization (q8_0), and keeps models loaded between sessions. See [`scripts/ollama-start.sh`](../scripts/ollama-start.sh) for details.
+
+> **Optional**: unlock more GPU memory (resets on boot):
+> ```sh
+> sudo sysctl iogpu.wired_limit_mb=120000
+> ```
+> macOS caps GPU memory at ~75% by default. This makes ~120GB of your 128GB available.
 
 Verify:
 
