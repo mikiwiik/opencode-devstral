@@ -24,6 +24,11 @@
   - `ollama pull devstral-small-2` on M3 Max Pro 128GB
   - Compare tokens/s local vs Verda to quantify the remote GPU benefit
 
+- [ ] Tune local Ollama settings for best performance
+  - Test different `num_ctx` values (8k, 16k, 32k) — smaller context = faster inference
+  - Test quantization variants (Q4_K_M vs Q8) — trade quality for speed
+  - Benchmark with `benchmark.sh` pointing at `localhost:11434`
+
 ## Medium priority
 
 - [ ] Try alternative coding tools
