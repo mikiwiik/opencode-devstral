@@ -68,19 +68,15 @@ No auth token needed — Ollama runs locally without authentication.
 
 ## 4. Connect OpenCode
 
-Copy the example config:
+Install the config globally (recommended — works across all projects):
 
 ```sh
-cp opencode.example.json opencode.json
+cp opencode.example.json ~/.config/opencode/opencode.json
 ```
 
-To default to the local model, edit `opencode.json` and change the top-level `"model"` to `"ollama/devstral-small-2-32k"`. Then run:
+To default to the local model, edit `~/.config/opencode/opencode.json` and change the top-level `"model"` to `"ollama/devstral-small-2-32k"`. Then run `opencode` from any project.
 
-```sh
-opencode
-```
-
-See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers).
+See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers). A project-local `opencode.json` overrides the global config if needed.
 
 ## Troubleshooting
 

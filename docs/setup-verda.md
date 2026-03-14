@@ -87,21 +87,22 @@ curl -X POST https://containers.datacrunch.io/YOUR-CONTAINER/v1/chat/completions
 
 ## 4. Connect OpenCode
 
-Copy the example config and fill in your Verda API URL:
+Install the config globally (recommended — works across all projects):
 
 ```sh
-cp opencode.example.json opencode.json
-# edit opencode.json: replace <YOUR_VERDA_API_URL> with your container URL
+cp opencode.example.json ~/.config/opencode/opencode.json
+# edit: replace <YOUR_VERDA_API_URL> with your container URL
 ```
 
-Set your API key and run:
+Add your API key to your shell profile (`~/.zshrc` or `~/.bashrc`):
 
 ```sh
 export VERDA_API_KEY="your-inference-api-key"
-opencode
 ```
 
-Devstral on Verda should be pre-selected as the default model. See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers).
+Then run `opencode` from any project. Devstral on Verda should be pre-selected as the default model.
+
+See [`opencode.example.json`](../opencode.example.json) for the full config (includes both Verda and local Ollama providers). A project-local `opencode.json` overrides the global config if needed.
 
 ## References
 
