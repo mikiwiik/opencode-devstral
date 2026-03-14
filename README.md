@@ -22,7 +22,18 @@ Local is ~2x slower but free and offline. For sustained coding sessions, the rem
 
 ## Quick start
 
-Pick a setup guide above, then run `opencode` from your project directory.
+1. Follow a setup guide above (Verda, Ollama, or both)
+2. Install the OpenCode config globally so it works across all projects:
+   ```sh
+   cp opencode.example.json ~/.config/opencode/opencode.json
+   # edit ~/.config/opencode/opencode.json: fill in your Verda API URL
+   ```
+3. Set your Verda API key (if using Verda):
+   ```sh
+   # add to your ~/.zshrc or ~/.bashrc
+   export VERDA_API_KEY="your-inference-api-key"
+   ```
+4. Run `opencode` from any project directory
 
 ## Model
 
