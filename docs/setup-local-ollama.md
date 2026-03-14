@@ -37,7 +37,20 @@ Verify:
 ollama list | grep devstral
 ```
 
-## 2. Test the endpoint
+## 2. Set context window to match Verda
+
+Ollama defaults to a small context window (2048-4096 tokens). The Verda setup uses `--max-model-len 32768`, so we match that for a fair comparison:
+
+```sh
+ollama run devstral-small-2
+/set parameter num_ctx 32768
+/save devstral-small-2-32k
+/bye
+```
+
+This creates a `devstral-small-2-32k` variant. Use this model name in the steps below.
+
+## 3. Test the endpoint
 
 Ollama exposes an OpenAI-compatible API at `localhost:11434/v1`.
 
@@ -45,7 +58,7 @@ Ollama exposes an OpenAI-compatible API at `localhost:11434/v1`.
 curl -s -X POST http://localhost:11434/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "devstral-small-2",
+    "model": "devstral-small-2-32k",
     "messages": [{"role": "user", "content": "Hello"}],
     "max_tokens": 64
   }' | jq '.usage'
@@ -53,14 +66,14 @@ curl -s -X POST http://localhost:11434/v1/chat/completions \
 
 No auth token needed — Ollama runs locally without authentication.
 
-## 3. Connect OpenCode
+## 4. Connect OpenCode
 
 Create `opencode.json` in your project root:
 
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "ollama/devstral-small-2",
+  "model": "ollama/devstral-small-2-32k",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -69,8 +82,8 @@ Create `opencode.json` in your project root:
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "devstral-small-2": {
-          "name": "Devstral Small 2 24B",
+        "devstral-small-2-32k": {
+          "name": "Devstral Small 2 24B (32K ctx)",
           "tools": true
         }
       }
