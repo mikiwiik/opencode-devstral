@@ -5,18 +5,20 @@ Run Devstral Small 2 (24B) as a coding agent via OpenCode. Two deployment option
 | Setup | Guide | Cost | Speed |
 |---|---|---|---|
 | Verda GPU (remote) | [docs/setup-verda.md](docs/setup-verda.md) | ~$0.28/h spot (A100 40GB) | ~50 tok/s |
-| Ollama (local) | [docs/setup-local-ollama.md](docs/setup-local-ollama.md) | Free | Slower (Apple Silicon) |
+| Ollama (local) | [docs/setup-local-ollama.md](docs/setup-local-ollama.md) | Free | ~23 tok/s |
 
 ## Performance comparison
 
-| | Local (M3 Max Pro 128GB) | Verda (A100 40GB) |
+Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Small 2 (32k context).
+
+| | Local (M3 Max Pro 128GB) | Verda (A100 40GB spot) |
 |---|---|---|
-| Cost | Free | ~$0.28/h spot |
-| Speed | ~5-15 tok/s (estimate) | ~50 tok/s |
+| Cost | Free | ~$0.28/h |
+| Speed | ~23 tok/s | ~50 tok/s |
 | Latency | No network overhead | Network round-trip |
 | Context | Limited by RAM | Limited by VRAM |
 
-Local is good for quick experiments and offline work. For sustained coding sessions, the remote GPU is significantly faster.
+Local is ~2x slower but free and offline. For sustained coding sessions, the remote GPU is noticeably faster.
 
 ## Quick start
 
