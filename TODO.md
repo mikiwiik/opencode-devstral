@@ -2,6 +2,11 @@
 
 ## High priority
 
+- [ ] Test [RTX PRO 6000](https://www.nvidia.com/en-us/design-visualization/rtx-pro-6000/) on Verda
+  - 96GB VRAM, $0.79/h spot — could be the sweet spot for this use case
+  - More VRAM than A100 80GB → larger context possible (~128k+?)
+  - Benchmark: compare speed, max context, and cost-effectiveness vs A100 80GB
+
 - [ ] Evaluate if H100 native FP8 is worth the cost premium
   - Current: A100 80GB ($0.43/h spot), no native FP8 — vLLM uses Marlin kernel fallback
   - H100 80GB ($0.88/h spot) has native FP8 — potentially faster inference
