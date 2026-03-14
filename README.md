@@ -4,7 +4,7 @@ Run Devstral Small 2 (24B) as a coding agent via OpenCode. Three deployment opti
 
 | Setup | Guide | Cost | Speed |
 |---|---|---|---|
-| Mistral API | [docs/setup-mistral-api.md](docs/setup-mistral-api.md) | ~$0.10/M in, $0.30/M out | TBD |
+| Mistral API | [docs/setup-mistral-api.md](docs/setup-mistral-api.md) | ~$0.10/M in, $0.30/M out | ~193 tok/s |
 | Verda GPU (remote) | [docs/setup-verda.md](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~59 tok/s |
 | Ollama (local) | [docs/setup-local-ollama.md](docs/setup-local-ollama.md) | Free | ~23 tok/s |
 
@@ -15,14 +15,14 @@ Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Sma
 | | Local (M3 Max Pro 128GB) | Verda A100 40GB | Verda A100 80GB | Mistral API |
 |---|---|---|---|---|
 | Cost | Free | ~$0.28/h spot | ~$0.43/h spot | ~$0.10/M in, $0.30/M out |
-| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | TBD |
+| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | ~193 tok/s |
 | Max context | ~128k (RAM limited) | ~32k | ~65k | 256k |
 
-> **Benchmark config**: A100 40GB measured with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`. Local used `num_ctx 32768`. A100 80GB is ~18% faster than 40GB and supports 2x the context for ~54% more cost.
+> **Benchmark config**: A100 40GB measured with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`. Local used `num_ctx 32768`.
 
 > **Local tuning results**: FlashAttention enabled by default (~23 tok/s, no overhead). KV cache quantization (q8_0) available via `ollama-start --large-ctx` — trades ~5% speed for 2x KV cache capacity on large context tasks. See [`scripts/ollama-start.sh`](scripts/ollama-start.sh).
 
-Verda is ~2.5x faster at generation. Local supports larger context windows and is free — better for offline work and large codebase review.
+Mistral API is by far the fastest (~193 tok/s) with the largest context (256k) and pay-per-token pricing. Verda is a good middle ground for sustained use. Local is free and offline but slowest.
 
 ## Quick start
 
