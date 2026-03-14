@@ -46,8 +46,10 @@ vLLM downloads model weights from HuggingFace at container startup. Devstral Sma
 **Start command** (toggle on, select CMD):
 
 ```
---model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --tool-call-parser mistral --enable-auto-tool-choice
+--model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len 32768 --tool-call-parser mistral --enable-auto-tool-choice
 ```
+
+> **Why `--max-model-len 32768`?** Without it, vLLM defaults to the model's full 393k context, which needs ~60 GiB KV cache — far more than a single GPU has free after loading model weights. 32k is plenty for coding tasks. Increase if you have a larger GPU (A100 80GB can handle ~64k+).
 
 Wait for the healthcheck to go green.
 
