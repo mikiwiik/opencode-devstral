@@ -1,9 +1,10 @@
 # Devstral + OpenCode
 
-Run Devstral Small 2 (24B) as a coding agent via OpenCode. Two deployment options:
+Run Devstral Small 2 (24B) as a coding agent via OpenCode. Three deployment options:
 
 | Setup | Guide | Cost | Speed |
 |---|---|---|---|
+| Mistral API | [docs/setup-mistral-api.md](docs/setup-mistral-api.md) | ~$0.10/M in, $0.30/M out | TBD |
 | Verda GPU (remote) | [docs/setup-verda.md](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~59 tok/s |
 | Ollama (local) | [docs/setup-local-ollama.md](docs/setup-local-ollama.md) | Free | ~23 tok/s |
 
@@ -11,11 +12,11 @@ Run Devstral Small 2 (24B) as a coding agent via OpenCode. Two deployment option
 
 Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Small 2.
 
-| | Local (M3 Max Pro 128GB) | Verda A100 40GB | Verda A100 80GB |
-|---|---|---|---|
-| Cost | Free | ~$0.28/h spot | ~$0.43/h spot |
-| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s |
-| Max context | ~128k (RAM limited) | ~32k | ~65k |
+| | Local (M3 Max Pro 128GB) | Verda A100 40GB | Verda A100 80GB | Mistral API |
+|---|---|---|---|---|
+| Cost | Free | ~$0.28/h spot | ~$0.43/h spot | ~$0.10/M in, $0.30/M out |
+| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | TBD |
+| Max context | ~128k (RAM limited) | ~32k | ~65k | 256k |
 
 > **Benchmark config**: A100 40GB measured with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`. Local used `num_ctx 32768`. A100 80GB is ~18% faster than 40GB and supports 2x the context for ~54% more cost.
 
@@ -25,16 +26,16 @@ Verda is ~2.5x faster at generation. Local supports larger context windows and i
 
 ## Quick start
 
-1. Follow a setup guide above (Verda, Ollama, or both)
+1. Follow a setup guide above (one or more)
 2. Install the OpenCode config globally so it works across all projects:
    ```sh
    cp opencode.example.json ~/.config/opencode/opencode.json
-   # edit ~/.config/opencode/opencode.json: fill in your Verda API URL
+   # edit: fill in your API URLs/keys
    ```
-3. Set your Verda API key (if using Verda):
+3. Set API keys for your providers (add to `~/.zshrc` or `~/.bashrc`):
    ```sh
-   # add to your ~/.zshrc or ~/.bashrc
-   export VERDA_API_KEY="your-inference-api-key"
+   export VERDA_API_KEY="your-verda-key"       # if using Verda
+   export MISTRAL_API_KEY="your-mistral-key"   # if using Mistral API
    ```
 4. Run `opencode` from any project directory
 
