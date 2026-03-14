@@ -22,10 +22,21 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 | Setting | Value |
 |---|---|
 | Container image | `docker.io/vllm/vllm-openai` (tag: see below) |
-| GPU | A100 80GB ($0.43/h spot) recommended — see below |
+| GPU | A100 40GB or 80GB — see below |
 | HTTP port | `8000` |
 | Healthcheck | port `8000`, path `/health` |
 | Public access | On |
+
+**Choosing a GPU:**
+
+| GPU | Spot price | Speed | Max context | Notes |
+|---|---|---|---|---|
+| A100 40GB | ~$0.28/h | ~50 tok/s | ~32k | Budget option, tight on VRAM |
+| A100 80GB | ~$0.43/h | ~59 tok/s | ~65k | **Recommended** — 18% faster, 2x context for 54% more cost |
+
+The configs and start command below assume A100 80GB. For A100 40GB, reduce `--max-model-len` to `32768` and set `context` to `32768` in `opencode.json`.
+
+Both lack native FP8 (falls back to Marlin kernel). For native FP8, consider H100 ($0.88/h) — see TODO.md.
 
 **Choosing a vLLM image tag:**
 
