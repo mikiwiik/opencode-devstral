@@ -22,7 +22,12 @@
 #
 #   ~50 tokens/s (512 completion tokens / 10.18s)
 
-API_URL="${1:?Usage: ./benchmark.sh <API_URL> [API_KEY] [MODEL]}"
+if [ -z "$1" ]; then
+  echo "Usage: ./benchmark.sh <API_URL> [API_KEY] [MODEL]"
+  exit 1
+fi
+
+API_URL="$1"
 API_KEY="${2:-}"
 MODEL="${3:-mistralai/Devstral-Small-2-24B-Instruct-2512}"
 
