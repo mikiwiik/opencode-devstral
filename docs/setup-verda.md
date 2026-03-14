@@ -1,6 +1,6 @@
 # Verda Setup: Devstral on Remote GPU
 
-Run Devstral Small 2 (24B) on a Verda GPU instance via vLLM.
+Run Devstral Small 2 (24B) on a [Verda](https://verda.com) (formerly [DataCrunch](https://datacrunch.io)) GPU instance via [vLLM](https://github.com/vllm-project/vllm).
 
 **Prerequisites**: [Install OpenCode and global config](prerequisites.md) first. You also need a [Verda](https://verda.com) account with credits.
 

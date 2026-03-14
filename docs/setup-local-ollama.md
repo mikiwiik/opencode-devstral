@@ -1,6 +1,6 @@
-# Local Setup: Devstral + Ollama
+# Local Setup: Devstral + [Ollama](https://ollama.com)
 
-Run Devstral Small 2 (24B) locally via Ollama on macOS Apple Silicon.
+Run Devstral Small 2 (24B) locally via [Ollama](https://ollama.com) on macOS Apple Silicon.
 
 **Prerequisites**: [Install OpenCode and global config](prerequisites.md) first. You also need:
 - Apple Silicon Mac with 128 GB unified memory
