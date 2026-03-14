@@ -5,22 +5,7 @@
 # Examples:
 #   ./benchmark.sh https://containers.datacrunch.io/my-container dc_abc123
 #   ./benchmark.sh http://localhost:11434 "" devstral-small-2-32k
-#
-# Sample output (Verda A100 SXM4 40GB spot, Devstral Small 2):
-#
-#   === Timing ===
-#   HTTP status: 200
-#   Total time: 10.183783s
-#   Time to first byte: 10.183567s
-#
-#   === Usage ===
-#   {
-#     "prompt_tokens": 16,
-#     "total_tokens": 528,
-#     "completion_tokens": 512
-#   }
-#
-#   ~50 tokens/s (512 completion tokens / 10.18s)
+
 
 if [ -z "$1" ]; then
   echo "Usage: ./benchmark.sh <API_URL> [API_KEY] [MODEL]"
