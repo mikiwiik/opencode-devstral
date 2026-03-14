@@ -4,25 +4,24 @@ Run Devstral Small 2 (24B) as a coding agent via OpenCode. Two deployment option
 
 | Setup | Guide | Cost | Speed |
 |---|---|---|---|
-| Verda GPU (remote) | [docs/setup-verda.md](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~50 tok/s |
+| Verda GPU (remote) | [docs/setup-verda.md](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~59 tok/s |
 | Ollama (local) | [docs/setup-local-ollama.md](docs/setup-local-ollama.md) | Free | ~23 tok/s |
 
 ## Performance comparison
 
 Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Small 2.
 
-| | Local (M3 Max Pro 128GB) | Verda (A100 40GB spot) |
-|---|---|---|
-| Cost | Free | ~$0.43/h |
-| Speed | ~23 tok/s | ~50 tok/s |
-| Latency | No network overhead | Network round-trip |
-| Max context | ~128k (RAM limited) | ~65k (80GB VRAM) |
+| | Local (M3 Max Pro 128GB) | Verda A100 40GB | Verda A100 80GB |
+|---|---|---|---|
+| Cost | Free | ~$0.28/h spot | ~$0.43/h spot |
+| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s |
+| Max context | ~128k (RAM limited) | ~32k | ~65k |
 
-> **Benchmark config**: both setups used 32k context at time of measurement. Local can go much higher given 128GB unified memory. Verda on A100 80GB has ~50 GiB free for KV cache after model weights, enough for 65k context. Speed benchmarks were measured on A100 40GB with 32k context — A100 80GB should be similar or faster.
+> **Benchmark config**: A100 40GB measured with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`. Local used `num_ctx 32768`. A100 80GB is ~18% faster than 40GB and supports 2x the context for ~54% more cost.
 
 > **Local tuning results**: FlashAttention enabled by default (~23 tok/s, no overhead). KV cache quantization (q8_0) available via `ollama-start --large-ctx` — trades ~5% speed for 2x KV cache capacity on large context tasks. See [`scripts/ollama-start.sh`](scripts/ollama-start.sh).
 
-Verda is ~2x faster at generation, but the local setup supports much larger context windows — making it better suited for tasks like codebase review that require loading many files.
+Verda is ~2.5x faster at generation. Local supports larger context windows and is free — better for offline work and large codebase review.
 
 ## Quick start
 
