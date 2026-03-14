@@ -46,3 +46,4 @@ Verda is ~2.5x faster at generation. Local supports larger context windows and i
 
 - [TODO.md](TODO.md) — next steps (GPU benchmarking, more models, alternative tools)
 - [benchmark.sh](benchmark.sh) — quick inference speed test
+- [docs/benchmark-code-review.md](docs/benchmark-code-review.md) — real-world codebase review benchmark results
