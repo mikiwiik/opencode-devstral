@@ -2,7 +2,7 @@
 # Quick benchmark: measure tokens/s from vLLM endpoint
 # Usage: ./benchmark.sh <API_URL> <API_KEY>
 #
-# Sample output (RTX 4500 Ada 24GB, Devstral Small 2):
+# Sample output (Verda A100 SXM4 40GB spot, Devstral Small 2):
 #
 #   === Timing ===
 #   HTTP status: 200
