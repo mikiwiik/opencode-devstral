@@ -18,7 +18,7 @@ Measured with `benchmark.sh` — fizzbuzz prompt, `max_tokens=512`, Devstral Sma
 | Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | ~193 tok/s |
 | Max context | ~128k (RAM limited) | ~32k | ~65k | 256k |
 
-> **Benchmark config**: A100 40GB measured with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`. Local used `num_ctx 32768`.
+> **Benchmark config** (March 2026): A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`, local with `num_ctx 32768`. Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12` at time of testing).
 
 > **Local tuning results**: FlashAttention enabled by default (~23 tok/s, no overhead). KV cache quantization (q8_0) available via `ollama-start --large-ctx` — trades ~5% speed for 2x KV cache capacity on large context tasks. See [`scripts/ollama-start.sh`](scripts/ollama-start.sh).
 
