@@ -1,7 +1,7 @@
 #!/bin/bash
 # Start Ollama with optimized settings for Apple Silicon (128GB)
 #
-# Install: ln -sf "$(pwd)/scripts/ollama-start.sh" /usr/local/bin/ollama-start
+# Install: ln -sf "$(pwd)/scripts/ollama-start.sh" ~/.local/bin/ollama-start
 #
 # Optional: increase GPU memory allocation (resets on boot)
 #   sudo sysctl iogpu.wired_limit_mb=120000
