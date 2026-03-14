@@ -21,11 +21,19 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 
 | Setting | Value |
 |---|---|
-| Container image | `docker.io/vllm/vllm-openai` |
+| Container image | `docker.io/vllm/vllm-openai` (tag: see below) |
 | GPU | A100 40GB ($0.28/h spot) or better — see TODO.md |
 | HTTP port | `8000` |
 | Healthcheck | port `8000`, path `/health` |
 | Public access | On |
+
+**Choosing a vLLM image tag:**
+
+Verda lists many tags — ignore the `cu*-nightly-*` ones (unstable dev builds). Pick the latest stable `vX.Y.Z` release. As of March 2026 that's `v0.17.1`.
+
+Devstral Small 2 requires `mistral_common >= 1.8.6` for tool-call parsing ([model card](https://huggingface.co/mistralai/Devstral-Small-2-24B-Instruct-2512)), which is bundled in recent vLLM stable releases. Verda's own tutorial uses the same `vllm-openai` image ([docs](https://docs.verda.com/containers/tutorials/deploy-with-vllm-quick)).
+
+Check [vLLM releases](https://github.com/vllm-project/vllm/releases) for newer versions.
 
 **Environment variables:**
 
