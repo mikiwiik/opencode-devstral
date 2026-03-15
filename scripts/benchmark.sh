@@ -9,10 +9,13 @@
 # API keys are read from .env or environment variables.
 # See .env.example for the template.
 
-# Source .env if it exists
-if [ -f .env ]; then
+# Source .env if it exists (look relative to script location, then CWD)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/../.env"
+[ ! -f "$ENV_FILE" ] && ENV_FILE=".env"
+if [ -f "$ENV_FILE" ]; then
   set -a
-  source .env
+  source "$ENV_FILE"
   set +a
 fi
 
