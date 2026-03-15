@@ -23,28 +23,14 @@ All three use the same model weights. The [OpenCode config](opencode.example.jso
 
 ## Benchmarks
 
-### Synthetic (tok/s)
-
-Measured with [`benchmark.sh`](benchmark.sh) — fizzbuzz prompt, `max_tokens=512`.
-
-| | Local (M3 Max Pro 128GB, 32k ctx) | Verda A100 40GB | Verda A100 80GB | Verda RTX PRO 6000 | Mistral API |
-|---|---|---|---|---|---|
-| Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | ~53 tok/s | ~193 tok/s |
-| Cost | Free | ~$0.28/h spot | ~$0.43/h spot | ~$0.79/h spot | ~$0.10/M in, $0.30/M out |
-
-> Benchmark config (March 2026): A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`, RTX PRO 6000 with `--max-model-len 131072`, local with `num_ctx 32768` (no q8_0 KV cache). Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12`).
-
-### Real-world: codebase review
-
-Reviewed a [5.7k line Python/FastAPI project](https://github.com/mikiwiik/data-serving-poc). Full results in [docs/benchmark-code-review.md](docs/benchmark-code-review.md). Local used `num_ctx 98304` with `OLLAMA_KV_CACHE_TYPE=q8_0` (`ollama-start --large-ctx`).
-
-| | Mistral API | Verda RTX PRO 6000 | Verda A100 80GB | Local (98k ctx) |
+| Provider | Speed | Code review | Cost | Best for |
 |---|---|---|---|---|
-| Time | **14s** | ~1 min | ~1.5 min | ~29 min |
-| Quality | Good | Good | Good | Best (most detailed) |
-| Cost | ~$0.003 | ~$0.014 | ~$0.01 | Free |
+| Mistral API | ~193 tok/s | 14s | ~$0.003/review | Quick dev tasks, one-off reviews |
+| Verda RTX PRO 6000 | ~53 tok/s | ~1 min | ~$0.79/h | Large codebase analysis (128k ctx) |
+| Verda A100 80GB | ~59 tok/s | ~1.5 min | ~$0.43/h | Sustained coding sessions |
+| Local (M3 Max Pro) | ~23 tok/s | ~29 min | Free | Offline / no cost |
 
-Mistral API is ~120x faster than local. RTX PRO 6000 edges out A100 80GB on this task — the 131k context avoids compaction that slows the A100 80GB run. Quality is comparable across all providers.
+Full results, methodology, and per-use-case recommendations in [docs/benchmarks.md](docs/benchmarks.md).
 
 ## Local tuning (Apple Silicon)
 
