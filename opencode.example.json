@@ -30,7 +30,7 @@
         "mistralai/Devstral-Small-2-24B-Instruct-2512": {
           "name": "Devstral Small 2 (A100 80GB)",
           "limit": {
-            "context": 65536,
+            "context": 98304,
             "output": 8192
           }
         }
