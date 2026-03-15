@@ -78,7 +78,11 @@
       },
       "models": {
         "devstral-small-2-32k": {
-          "name": "Devstral Small 2 (local)",
+          "name": "Devstral Small 2 (local 32k)",
+          "tools": true
+        },
+        "devstral-small-2-98k": {
+          "name": "Devstral Small 2 (local 98k)",
           "tools": true
         }
       }
