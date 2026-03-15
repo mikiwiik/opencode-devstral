@@ -23,12 +23,12 @@ All three use the same model weights. The [OpenCode config](opencode.example.jso
 
 ## Benchmarks
 
-| Provider | Speed | Code review | Cost | Best for |
-|---|---|---|---|---|
-| Mistral API | ~193 tok/s | 14s | ~$0.003/review | Quick dev tasks, one-off reviews |
-| Verda RTX PRO 6000 | ~53 tok/s | ~1 min | ~$0.79/h | Large codebase analysis (128k ctx) |
-| Verda A100 80GB | ~59 tok/s | ~1.5 min | ~$0.43/h | Sustained coding sessions |
-| Local (M3 Max Pro) | ~23 tok/s | ~29 min | Free | Offline / no cost |
+| Provider | Speed | Code review | Cost/review | Cost/hour | Best for |
+|---|---|---|---|---|---|
+| Mistral API | ~193 tok/s | 14s | ~$0.003 | ~$0.15 | Quick dev tasks, one-off reviews |
+| Verda RTX PRO 6000 | ~53 tok/s | ~1 min | ~$0.014 | $0.79 | Large codebase analysis (128k ctx) |
+| Verda A100 80GB | ~59 tok/s | ~1.5 min | ~$0.01 | $0.43 | Sustained coding sessions |
+| Local (M3 Max Pro) | ~23 tok/s | ~29 min | Free | Free | Offline / no cost |
 
 Full results, methodology, and per-use-case recommendations in [docs/benchmarks.md](docs/benchmarks.md).
 
