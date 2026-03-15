@@ -21,14 +21,14 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 | GPU | Spot price | Speed | `--max-model-len` | Context | Best for |
 |---|---|---|---|---|---|
 | A100 40GB | ~$0.28/h | ~50 tok/s | `32768` | ~32k | Budget / quick tasks |
-| A100 80GB | ~$0.43/h | ~59 tok/s | `65536` | ~65k | **Recommended** — good balance of speed, context, and cost |
+| A100 80GB | ~$0.43/h | ~59 tok/s | `98304` | ~98k | **Recommended** — good balance of speed, context, and cost |
 | RTX PRO 6000 | ~$0.79/h | ~53 tok/s | `131072` | ~128k | Large context tasks (full codebase review without compaction) |
 
 Use the `--max-model-len` value from the table in your start command and set matching `context` in `opencode.json`.
 
 All three GPUs lack native FP8 (vLLM falls back to Marlin kernel). For native FP8, consider H100 ($0.88/h) — see TODO.md.
 
-> **How context limits are derived:** Model weights take ~24 GiB. With `--gpu-memory-utilization 0.9`, the remaining VRAM is available for KV cache. A100 40GB → ~12 GiB KV → 32k. A100 80GB → ~48 GiB KV → 65k. RTX PRO 6000 → ~62 GiB KV → 128k. If RTX PRO 6000 hits OOM at 131072, fall back to `114688`.
+> **How context limits are derived:** Model weights take ~24 GiB. With `--gpu-memory-utilization 0.9`, the remaining VRAM is available for KV cache. A100 40GB → ~12 GiB KV → 32k. A100 80GB → ~48 GiB KV → 98k. RTX PRO 6000 → ~62 GiB KV → 128k. If RTX PRO 6000 hits OOM at 131072, fall back to `114688`.
 
 **Choosing a vLLM image tag:**
 
@@ -52,7 +52,7 @@ vLLM downloads model weights from HuggingFace at container startup. Devstral Sma
 --model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len <VALUE> --tool-call-parser mistral --enable-auto-tool-choice
 ```
 
-Replace `<VALUE>` with the `--max-model-len` from the GPU table above (`32768` / `65536` / `131072`).
+Replace `<VALUE>` with the `--max-model-len` from the GPU table above (`32768` / `98304` / `131072`).
 
 Wait for the healthcheck to go green.
 

@@ -13,7 +13,7 @@ All benchmarks use [Devstral Small 2](https://huggingface.co/mistralai/Devstral-
 | Speed | ~23 tok/s | ~50 tok/s | ~59 tok/s | ~53 tok/s | ~193 tok/s |
 | Cost | Free | ~$0.28/h spot | ~$0.43/h spot | ~$0.79/h spot | ~$0.10/M in, $0.30/M out |
 
-> **Config:** A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 65536`, RTX PRO 6000 with `--max-model-len 131072`, local with `num_ctx 32768` (no q8_0 KV cache). Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12`).
+> **Config:** A100 40GB with `--max-model-len 32768`, A100 80GB with `--max-model-len 98304`, RTX PRO 6000 with `--max-model-len 131072`, local with `num_ctx 32768` (no q8_0 KV cache). Mistral API used `devstral-small-latest` (resolved to `devstral-small-2-25-12`).
 
 ## Codebase review (real-world)
 
@@ -53,7 +53,7 @@ review the codebase in the current repository. summarize the architecture, ident
 
 - **Mistral API** is ~120x faster than local for this task. The 256k context lets it load the entire codebase in one shot without compaction or subagents.
 - **Verda RTX PRO 6000** (131k context) completed the review in ~1 min with no compaction — 79k tokens used only 61% of context. Slightly faster than A100 80GB despite ~10% lower tok/s (52.8 vs 59), because it avoids the compaction overhead.
-- **Verda A100 80GB** (98k context) worked but hit the context limit mid-review and needed compaction. The 65k config from earlier failed entirely on this codebase (74k input tokens).
+- **Verda A100 80GB** (98k context) worked but hit the context limit mid-review and needed compaction. An earlier 65k config failed entirely on this codebase (74k input tokens), so the limit was bumped to 98k.
 - **Local 98k** produced the most thorough review — more time meant more detailed analysis of naming conventions, code duplication, architecture patterns (DDD, CQRS), and security. OpenCode used an explore subagent with 55k tokens.
 - **Local 32k** also succeeded by splitting work across subagents, avoiding the context limit. Faster than 98k but less detailed.
 - **Quality is comparable** across all providers — same model weights produce similar insights. The main difference is depth of analysis (proportional to time spent).
@@ -74,7 +74,7 @@ At these prices, Mistral API is the clear winner for one-off reviews. Verda A100
 | Use case | Best provider | Why |
 |---|---|---|
 | Quick dev chat / small tasks | Mistral API | Fastest (~193 tok/s), cheapest per task |
-| Sustained coding session | Verda A100 80GB | Best $/h value ($0.43/h), 65k context sufficient for most tasks |
+| Sustained coding session | Verda A100 80GB | Best $/h value ($0.43/h), 98k context sufficient for most tasks |
 | Large codebase analysis | Verda RTX PRO 6000 | 128k context avoids compaction, worth the premium for big codebases |
 | Offline / free | Local Ollama | Slow but free, same model quality |
 
