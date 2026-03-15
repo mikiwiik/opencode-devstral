@@ -22,7 +22,7 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 |---|---|---|---|---|---|
 | A100 40GB | ~$0.28/h | ~50 tok/s | `32768` | ~32k | Budget / quick tasks |
 | A100 80GB | ~$0.43/h | ~59 tok/s | `65536` | ~65k | **Recommended** — good balance of speed, context, and cost |
-| RTX PRO 6000 | ~$0.79/h | TBD | `131072` | ~128k | Large context tasks (full codebase review without compaction) |
+| RTX PRO 6000 | ~$0.79/h | ~53 tok/s | `131072` | ~128k | Large context tasks (full codebase review without compaction) |
 
 Use the `--max-model-len` value from the table in your start command and set matching `context` in `opencode.json`.
 

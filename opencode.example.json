@@ -1,19 +1,53 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "verda/mistralai/Devstral-Small-2-24B-Instruct-2512",
+  "model": "verda-rtx-pro-6000/mistralai/Devstral-Small-2-24B-Instruct-2512",
   "provider": {
-    "verda": {
+    "verda-a100-40gb": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Verda (Devstral)",
+      "name": "Verda A100 40GB",
       "options": {
         "baseURL": "<YOUR_VERDA_API_URL>/v1",
         "apiKey": "{env:VERDA_API_KEY}"
       },
       "models": {
         "mistralai/Devstral-Small-2-24B-Instruct-2512": {
-          "name": "Devstral Small 2 (Verda)",
+          "name": "Devstral Small 2 (A100 40GB)",
+          "limit": {
+            "context": 32768,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "verda-a100-80gb": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Verda A100 80GB",
+      "options": {
+        "baseURL": "<YOUR_VERDA_API_URL>/v1",
+        "apiKey": "{env:VERDA_API_KEY}"
+      },
+      "models": {
+        "mistralai/Devstral-Small-2-24B-Instruct-2512": {
+          "name": "Devstral Small 2 (A100 80GB)",
           "limit": {
             "context": 65536,
+            "output": 8192
+          }
+        }
+      }
+    },
+    "verda-rtx-pro-6000": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Verda RTX PRO 6000",
+      "options": {
+        "baseURL": "<YOUR_VERDA_API_URL>/v1",
+        "apiKey": "{env:VERDA_API_KEY}"
+      },
+      "models": {
+        "mistralai/Devstral-Small-2-24B-Instruct-2512": {
+          "name": "Devstral Small 2 (RTX PRO 6000)",
+          "limit": {
+            "context": 131072,
             "output": 8192
           }
         }
