@@ -12,7 +12,7 @@ Currently tested with [Devstral Small 2](https://huggingface.co/mistralai/Devstr
 
 ## Deployment options
 
-| Setup | Guide | Cost | Speed | Max context |
+| Setup | Guide | Cost | Speed (synthetic) | Max context |
 |---|---|---|---|---|
 | Mistral API (hosted) | [setup](docs/setup-mistral-api.md) | ~$0.10/M in, $0.30/M out | ~193 tok/s | 256k |
 | Verda GPU (remote) | [setup](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~59 tok/s | ~65k |
