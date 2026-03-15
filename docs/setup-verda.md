@@ -11,21 +11,24 @@ Follow [Verda's vLLM tutorial](https://docs.verda.com/containers/tutorials/deplo
 | Setting | Value |
 |---|---|
 | Container image | `docker.io/vllm/vllm-openai` (tag: see below) |
-| GPU | A100 40GB or 80GB — see below |
+| GPU | A100 40GB, A100 80GB, or RTX PRO 6000 — see below |
 | HTTP port | `8000` |
 | Healthcheck | port `8000`, path `/health` |
 | Public access | On |
 
 **Choosing a GPU:**
 
-| GPU | Spot price | Speed | Max context | Notes |
-|---|---|---|---|---|
-| A100 40GB | ~$0.28/h | ~50 tok/s | ~32k | Budget option, tight on VRAM |
-| A100 80GB | ~$0.43/h | ~59 tok/s | ~65k | **Recommended** — 18% faster, 2x context for 54% more cost |
+| GPU | Spot price | Speed | `--max-model-len` | Context | Best for |
+|---|---|---|---|---|---|
+| A100 40GB | ~$0.28/h | ~50 tok/s | `32768` | ~32k | Budget / quick tasks |
+| A100 80GB | ~$0.43/h | ~59 tok/s | `65536` | ~65k | **Recommended** — good balance of speed, context, and cost |
+| RTX PRO 6000 | ~$0.79/h | TBD | `131072` | ~128k | Large context tasks (full codebase review without compaction) |
 
-The configs and start command below assume A100 80GB. For A100 40GB, reduce `--max-model-len` to `32768` and set `context` to `32768` in `opencode.json`.
+Use the `--max-model-len` value from the table in your start command and set matching `context` in `opencode.json`.
 
-Both lack native FP8 (falls back to Marlin kernel). For native FP8, consider H100 ($0.88/h) — see TODO.md.
+All three GPUs lack native FP8 (vLLM falls back to Marlin kernel). For native FP8, consider H100 ($0.88/h) — see TODO.md.
+
+> **How context limits are derived:** Model weights take ~24 GiB. With `--gpu-memory-utilization 0.9`, the remaining VRAM is available for KV cache. A100 40GB → ~12 GiB KV → 32k. A100 80GB → ~48 GiB KV → 65k. RTX PRO 6000 → ~62 GiB KV → 128k. If RTX PRO 6000 hits OOM at 131072, fall back to `114688`.
 
 **Choosing a vLLM image tag:**
 
@@ -46,10 +49,10 @@ vLLM downloads model weights from HuggingFace at container startup. Devstral Sma
 **Start command** (toggle on, select CMD):
 
 ```
---model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len 65536 --tool-call-parser mistral --enable-auto-tool-choice
+--model mistralai/Devstral-Small-2-24B-Instruct-2512 --gpu-memory-utilization 0.9 --max-model-len <VALUE> --tool-call-parser mistral --enable-auto-tool-choice
 ```
 
-> **Why `--max-model-len 65536`?** Without it, vLLM defaults to the model's full 393k context, which needs ~60 GiB KV cache. Model weights take ~24 GiB, so an A100 80GB has ~50 GiB free for KV cache — enough for 65k context. On a smaller A100 40GB, reduce to `32768`.
+Replace `<VALUE>` with the `--max-model-len` from the GPU table above (`32768` / `65536` / `131072`).
 
 Wait for the healthcheck to go green.
 
