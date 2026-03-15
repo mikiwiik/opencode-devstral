@@ -6,7 +6,7 @@ All benchmarks use [Devstral Small 2](https://huggingface.co/mistralai/Devstral-
 
 **What it tests:** small-context, fast Q&A — represents everyday coding questions and short completions.
 
-**Method:** [`benchmark.sh`](benchmark.sh) — fizzbuzz prompt, `max_tokens=512`.
+**Method:** [`benchmark.sh`](../scripts/benchmark.sh) — fizzbuzz prompt, `max_tokens=512`.
 
 | | Local (M3 Max Pro 128GB, 32k ctx) | Verda A100 40GB | Verda A100 80GB | Verda RTX PRO 6000 | Mistral API |
 |---|---|---|---|---|---|
