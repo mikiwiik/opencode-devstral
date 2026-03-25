@@ -36,7 +36,9 @@ The model is downloaded from HuggingFace on first run and cached in `~/.cache/hu
 
 The server exposes an OpenAI-compatible API at `http://localhost:8080/v1`.
 
-## 3. Test the endpoint
+## 2. Test the endpoint
+
+No auth token needed — the server runs locally without authentication.
 
 ```sh
 curl -s -X POST http://localhost:8080/v1/chat/completions \
@@ -48,7 +50,7 @@ curl -s -X POST http://localhost:8080/v1/chat/completions \
   }' | jq '.usage'
 ```
 
-## 4. Connect OpenCode
+## 3. Connect OpenCode
 
 Create `opencode.json` in your project root:
 
@@ -118,6 +120,6 @@ MLX is designed for Apple Silicon and should better utilize the unified memory a
 
 - [MLX framework](https://github.com/ml-explore/mlx)
 - [mlx-lm on PyPI](https://pypi.org/project/mlx-lm/)
-- [Devstral Small 2 MLX 8-bit on HuggingFace](https://huggingface.co/mlx-community/mistralai_Devstral-Small-2-24B-Instruct-2512-MLX-8Bit)
+- [Devstral Small 2 MLX 8-bit on HuggingFace](https://huggingface.co/mlx-community/Devstral-Small-2-24B-Instruct-2512-8bit)
 - [Devstral Small 2 MLX 4-bit on HuggingFace](https://huggingface.co/mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit)
 - [OpenCode docs](https://opencode.ai/docs/)
