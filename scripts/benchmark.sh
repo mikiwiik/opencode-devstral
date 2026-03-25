@@ -47,11 +47,23 @@ case "$1" in
     API_KEY=""
     MODEL="${2:-devstral-small-2-32k}"
     ;;
+  --mlx-8bit)
+    API_URL="http://localhost:8080"
+    API_KEY=""
+    MODEL="mlx-community/Devstral-Small-2-24B-Instruct-2512-8bit"
+    ;;
+  --mlx-4bit)
+    API_URL="http://localhost:8080"
+    API_KEY=""
+    MODEL="mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit"
+    ;;
   *)
     echo "Usage:"
     echo "  ./benchmark.sh --mistral              # Mistral API (key from .env)"
     echo "  ./benchmark.sh --verda <API_URL>       # Verda endpoint (key from .env)"
     echo "  ./benchmark.sh --local [MODEL]         # Local Ollama (default: devstral-small-2-32k)"
+    echo "  ./benchmark.sh --mlx-8bit             # Local MLX server (8-bit)"
+    echo "  ./benchmark.sh --mlx-4bit             # Local MLX server (4-bit)"
     echo ""
     echo "API keys are read from .env or environment variables."
     echo "See .env.example for the template."
