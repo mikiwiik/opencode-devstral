@@ -81,7 +81,7 @@ opencode
 > **Not usable for agent tasks.** mlx-lm's Mistral tool parser has multiple bugs that prevent reliable tool calls with OpenCode. Benchmarking on M3 Max Pro 128GB:
 >
 > - **MLX 4-bit: ~26.7 tok/s** (synthetic), ~57.7s for a simple OpenCode task.
-> - **MLX 8-bit: ~14.6 tok/s** (synthetic). Slower than Ollama (~23 tok/s).
+> - **MLX 8-bit: ~14.6 tok/s** (synthetic). Slower than Ollama (~23 tok/s). Tool calls broken even with `--max-tokens 4096`.
 >
 > **Tool call parser bugs (two distinct failures):**
 > 1. **Truncated JSON** — default `--max-tokens 512` cuts off tool call arguments mid-JSON. Workaround: `--max-tokens 4096`.
@@ -101,7 +101,7 @@ opencode
 | Quantization | 8-bit | 4-bit | Default Q4 | FP16 |
 | Context | Limited by RAM | Limited by RAM | Limited by RAM | Limited by VRAM |
 
-Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit) and 2026-03-28 (4-bit).
+Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit synthetic) and 2026-03-28 (4-bit synthetic + OpenCode, 8-bit OpenCode).
 
 ## Troubleshooting
 
