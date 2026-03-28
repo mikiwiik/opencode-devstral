@@ -87,28 +87,18 @@
         }
       }
     },
-    "mlx-8bit": {
+    "mlx": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "MLX 8-bit (local)",
-      "options": {
-        "baseURL": "http://localhost:8080/v1"
-      },
-      "models": {
-        "mlx-community/Devstral-Small-2-24B-Instruct-2512-8bit": {
-          "name": "Devstral Small 2 (MLX 8-bit)",
-          "name": "Devstral Small 2 (MLX 8-bit)"
-        }
-      }
-    },
-    "mlx-4bit": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "MLX 4-bit (local)",
+      "name": "MLX (local)",
       "options": {
         "baseURL": "http://localhost:8080/v1"
       },
       "models": {
         "mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit": {
           "name": "Devstral Small 2 (MLX 4-bit)"
+        },
+        "mlx-community/Devstral-Small-2-24B-Instruct-2512-8bit": {
+          "name": "Devstral Small 2 (MLX 8-bit)"
         }
       }
     }
