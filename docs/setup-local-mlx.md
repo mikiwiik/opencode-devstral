@@ -91,17 +91,16 @@ opencode
 >
 > **Also slow with OpenCode:** OpenCode sends ~10k tokens of system prompt + tool definitions per request. Prompt prefill dominates — a simple task took 57.7s despite ~26.7 tok/s generation speed.
 
-## MLX vs Ollama vs Verda
+## MLX vs Ollama (local comparison)
 
-| | MLX 8-bit (local) | MLX 4-bit (local) | Ollama (local) | Verda (A100 80GB) |
-|---|---|---|---|---|
-| Cost | Free | Free | Free | ~$0.43/h spot |
-| Speed | ~14.6 tok/s | ~26.7 tok/s | ~23 tok/s | ~59 tok/s |
-| Tool calls | Broken (parser bugs) | Broken (parser bugs) | Working | Working |
-| Quantization | 8-bit | 4-bit | Default Q4 | FP16 |
-| Context | Limited by RAM | Limited by RAM | Limited by RAM | Limited by VRAM |
+| | MLX 4-bit | MLX 8-bit | Ollama |
+|---|---|---|---|
+| Speed (synthetic) | ~26.7 tok/s | ~14.6 tok/s | ~23 tok/s |
+| Tool calls | Broken | Broken | Working |
+| Quantization | 4-bit | 8-bit | Q4_K_M |
+| Agent use | No | No | Yes |
 
-Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit synthetic) and 2026-03-28 (4-bit synthetic + OpenCode, 8-bit OpenCode).
+Tested on M3 Max Pro 128GB. For remote options (Verda, Mistral API), see [benchmarks.md](benchmarks.md).
 
 ## Troubleshooting
 
