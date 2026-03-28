@@ -7,16 +7,8 @@ MLX is Apple's machine learning framework optimized for Apple Silicon's unified 
 ## Prerequisites
 
 - Apple Silicon Mac (M-series) with 32 GB+ unified memory
-- Homebrew installed
-
-```sh
-# optional but recommended — used by OpenCode for search
-brew install fzf ripgrep
-
-# install uv (fast Python package manager) and OpenCode
-brew install uv opencode
-# or install OpenCode via: curl -fsSL https://opencode.ai/install | bash
-```
+- [OpenCode and dependencies installed](prerequisites.md)
+- [uv](https://docs.astral.sh/uv/) installed: `brew install uv`
 
 ## 1. Start the MLX server with Devstral Small 2
 
