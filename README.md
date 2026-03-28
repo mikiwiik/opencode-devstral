@@ -17,10 +17,10 @@ Currently tested with [Devstral Small 2](https://huggingface.co/mistralai/Devstr
 | Mistral API (hosted) | [setup](docs/setup-mistral-api.md) | ~$0.10/M in, $0.30/M out | ~193 tok/s | 256k |
 | Verda GPU (remote) | [setup](docs/setup-verda.md) | ~$0.43/h spot (A100 80GB) | ~59 tok/s | ~98k |
 | Verda GPU (remote) | [setup](docs/setup-verda.md) | ~$0.79/h spot (RTX PRO 6000) | ~53 tok/s | ~128k |
-| MLX 8-bit (local macOS) | [setup](docs/setup-local-mlx.md) | Free | ~14.6 tok/s | TBD (experimental — tool calls broken) |
+| MLX (local macOS) | [setup](docs/setup-local-mlx.md) | Free | ~26.7 tok/s (4-bit) | Experimental — tool calls broken |
 | Ollama (local macOS) | [setup](docs/setup-local-ollama.md) | Free | ~23 tok/s | ~98k+ |
 
-All three use the same model weights. The [OpenCode config](opencode.example.json) includes all providers — switch between them in the model picker.
+All options use the same model weights. The [OpenCode config](opencode.example.json) includes all providers — switch between them in the model picker.
 
 ## Benchmarks
 
