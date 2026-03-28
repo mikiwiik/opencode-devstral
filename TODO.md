@@ -32,6 +32,13 @@
   - Test quantization variants (Q4_K_M vs Q8) — trade quality for speed
   - Benchmark with `benchmark.sh` pointing at `localhost:11434`
 
+- [ ] Revisit MLX as local inference backend when tool call parser is fixed
+  - Blocked by mlx-lm Mistral tool parser bugs — see [docs/setup-local-mlx.md](docs/setup-local-mlx.md)
+  - Track: [ml-explore/mlx-lm#1069](https://github.com/ml-explore/mlx-lm/issues/1069) (premature JSON truncation)
+  - Track: [ml-explore/mlx-lm#899](https://github.com/ml-explore/mlx-lm/pull/899) (graceful error handling PR)
+  - Unresolved: multiple concatenated tool calls ("Extra data") — no upstream issue filed yet
+  - MLX 4-bit was faster than Ollama (~26.7 vs ~23 tok/s) so worth revisiting if parser is fixed
+
 ## Medium priority
 
 - [ ] Try alternative coding tools
