@@ -110,7 +110,7 @@ Tested on M3 Max Pro 128GB. For remote options (Verda, Mistral API), see [benchm
 
 **Tool calls not working / OpenCode loops forever**
 - See [Status: experimental](#status-experimental) for details on the two known parser bugs and workarounds.
-- Track upstream: [mlx-lm issues](https://github.com/ml-explore/mlx-examples/issues)
+- Track upstream: [mlx-lm issues](https://github.com/ml-explore/mlx-lm/issues)
 
 **Slow response in OpenCode**
 - OpenCode sends ~10k tokens of system prompt + tool definitions per request. Prompt prefill dominates latency. This is expected — generation speed (~26.7 tok/s for 4-bit) is fine, but prefill is the bottleneck.
