@@ -105,7 +105,7 @@ opencode
 |---|---|---|---|---|
 | Cost | Free | Free | Free | ~$0.43/h spot |
 | Speed | ~14.6 tok/s | ~26.7 tok/s | ~23 tok/s | ~59 tok/s |
-| Tool calls | Untested | Broken (parser bugs) | Working | Working |
+| Tool calls | Broken (parser bugs) | Broken (parser bugs) | Working | Working |
 | Quantization | 8-bit | 4-bit | Default Q4 | FP16 |
 | Context | Limited by RAM | Limited by RAM | Limited by RAM | Limited by VRAM |
 
@@ -118,10 +118,7 @@ Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit) and 2026-03-28 (4-bit).
 - Models are cached in `~/.cache/huggingface/hub/`.
 
 **Tool calls not working / OpenCode loops forever**
-- Two known bugs in mlx-lm's Mistral tool parser:
-  1. **Truncated JSON** — default `--max-tokens 512` is too low. Fix: restart with `--max-tokens 4096`.
-  2. **Multiple tool calls** — model outputs concatenated JSON (`{"a":"1"}{"b":"2"}`), `json.loads` fails with `Extra data`. **No workaround** — requires an upstream fix in mlx-lm.
-- Simple single-tool tasks work with the `--max-tokens` fix. Multi-tool agent tasks (file reads, codebase review) are broken.
+- See [Status: experimental](#status-experimental) for details on the two known parser bugs and workarounds.
 - Track upstream: [mlx-lm issues](https://github.com/ml-explore/mlx-examples/issues)
 
 **Slow response in OpenCode**

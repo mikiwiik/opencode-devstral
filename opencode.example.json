@@ -96,7 +96,7 @@
       "models": {
         "mlx-community/Devstral-Small-2-24B-Instruct-2512-8bit": {
           "name": "Devstral Small 2 (MLX 8-bit)",
-          "tools": true
+          "name": "Devstral Small 2 (MLX 8-bit)"
         }
       }
     },
@@ -108,8 +108,7 @@
       },
       "models": {
         "mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit": {
-          "name": "Devstral Small 2 (MLX 4-bit)",
-          "tools": true
+          "name": "Devstral Small 2 (MLX 4-bit)"
         }
       }
     }
