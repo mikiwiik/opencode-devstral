@@ -86,14 +86,18 @@ opencode
 
 ## Status: experimental
 
-> **Usable with workaround, but slow for agent tasks.** Benchmarking on M3 Max Pro 128GB:
+> **Not usable for agent tasks.** mlx-lm's Mistral tool parser has multiple bugs that prevent reliable tool calls with OpenCode. Benchmarking on M3 Max Pro 128GB:
 >
-> - **MLX 4-bit: ~26.7 tok/s** (synthetic), ~57.7s for a simple OpenCode task. Tool calls work with `--max-tokens 4096`.
-> - **MLX 8-bit: ~14.6 tok/s** (synthetic). Too slow for practical agent use.
+> - **MLX 4-bit: ~26.7 tok/s** (synthetic), ~57.7s for a simple OpenCode task.
+> - **MLX 8-bit: ~14.6 tok/s** (synthetic). Slower than Ollama (~23 tok/s).
 >
-> **Workaround for tool calls:** The default `--max-tokens 512` causes tool call JSON to be truncated, which crashes mlx-lm's Mistral parser. Fix by starting the server with `--max-tokens 4096` (or higher).
+> **Tool call parser bugs (two distinct failures):**
+> 1. **Truncated JSON** — default `--max-tokens 512` cuts off tool call arguments mid-JSON. Workaround: `--max-tokens 4096`.
+> 2. **Multiple tool calls** — when the model calls multiple tools in one response (e.g. reading several files), the parser receives concatenated JSON objects (`{"path":"a"}{"path":"b"}`) and fails with `Extra data`. No workaround — this is a bug in mlx-lm's Mistral tool parser.
 >
-> **Slow with OpenCode:** OpenCode sends ~10k tokens of system prompt + tool definitions on every request. Prompt prefill dominates latency — a simple fizzbuzz task took 57.7s despite ~26.7 tok/s generation speed. Multi-turn conversations will be slower as context grows.
+> Simple single-tool tasks (like "write fizzbuzz") work with the `--max-tokens` fix, but any agent task that requires reading multiple files fails immediately and loops forever.
+>
+> **Also slow with OpenCode:** OpenCode sends ~10k tokens of system prompt + tool definitions per request. Prompt prefill dominates — a simple task took 57.7s despite ~26.7 tok/s generation speed.
 
 ## MLX vs Ollama vs Verda
 
@@ -101,7 +105,7 @@ opencode
 |---|---|---|---|---|
 | Cost | Free | Free | Free | ~$0.43/h spot |
 | Speed | ~14.6 tok/s | ~26.7 tok/s | ~23 tok/s | ~59 tok/s |
-| Tool calls | Untested | Working (needs `--max-tokens 4096`) | Working | Working |
+| Tool calls | Untested | Broken (parser bugs) | Working | Working |
 | Quantization | 8-bit | 4-bit | Default Q4 | FP16 |
 | Context | Limited by RAM | Limited by RAM | Limited by RAM | Limited by VRAM |
 
@@ -113,13 +117,15 @@ Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit) and 2026-03-28 (4-bit).
 - HuggingFace downloads can be large (~25 GB for 8-bit). Ensure sufficient disk space and a stable connection.
 - Models are cached in `~/.cache/huggingface/hub/`.
 
-**Tool calls not working / OpenCode hangs**
-- Most likely cause: `--max-tokens` is too low (default 512). The model's tool call JSON gets truncated, crashing mlx-lm's Mistral parser. Restart with `--max-tokens 4096`.
-- If still failing, check for fixes in newer mlx-lm versions: `uvx --from mlx-lm@latest mlx_lm.server ...`
+**Tool calls not working / OpenCode loops forever**
+- Two known bugs in mlx-lm's Mistral tool parser:
+  1. **Truncated JSON** — default `--max-tokens 512` is too low. Fix: restart with `--max-tokens 4096`.
+  2. **Multiple tool calls** — model outputs concatenated JSON (`{"a":"1"}{"b":"2"}`), `json.loads` fails with `Extra data`. **No workaround** — requires an upstream fix in mlx-lm.
+- Simple single-tool tasks work with the `--max-tokens` fix. Multi-tool agent tasks (file reads, codebase review) are broken.
 - Track upstream: [mlx-lm issues](https://github.com/ml-explore/mlx-examples/issues)
 
 **Slow response in OpenCode**
-- OpenCode sends ~10k tokens of system prompt + tool definitions per request. Prompt prefill at ~700 tok/s dominates latency. This is expected — generation speed (~26.7 tok/s for 4-bit) is fine, but prefill is the bottleneck.
+- OpenCode sends ~10k tokens of system prompt + tool definitions per request. Prompt prefill dominates latency. This is expected — generation speed (~26.7 tok/s for 4-bit) is fine, but prefill is the bottleneck.
 
 **Out of memory**
 - Use the 4-bit quantization variant to reduce memory usage.
