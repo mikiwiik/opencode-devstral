@@ -84,24 +84,24 @@ opencode
 
 ## Status: experimental
 
-> **Not recommended for agent use yet.** Benchmarking on M3 Max Pro 128GB revealed two blockers:
+> **Not recommended for agent use yet.** Benchmarking on M3 Max Pro 128GB:
 >
-> 1. **Slower than Ollama** — MLX 8-bit measured ~14.6 tok/s vs Ollama's ~23 tok/s for the same model.
-> 2. **Tool call parsing is broken** — mlx-lm's Mistral tool parser fails with `JSONDecodeError` when parsing tool call arguments. The server returns HTTP 200 but with malformed tool calls, causing OpenCode to hang or fail silently. A 2-hour coding session produced no output.
+> - **MLX 4-bit: ~26.7 tok/s** — faster than Ollama (~23 tok/s). No errors on simple completions. Tool calls untested.
+> - **MLX 8-bit: ~14.6 tok/s** — slower than Ollama. Tool call parsing broken (`JSONDecodeError` in mlx-lm's Mistral parser), causing OpenCode to hang. A 2-hour coding session produced no output.
 >
-> Simple (non-tool) completions work. Agent use requires the tool parsing fix upstream in [mlx-lm](https://github.com/ml-explore/mlx-examples/issues).
+> Simple (non-tool) completions work on both variants. Agent use (tool calls) needs verification on 4-bit and a fix upstream for 8-bit — see [mlx-lm issues](https://github.com/ml-explore/mlx-examples/issues).
 
 ## MLX vs Ollama vs Verda
 
 | | MLX 8-bit (local) | MLX 4-bit (local) | Ollama (local) | Verda (A100 80GB) |
 |---|---|---|---|---|
 | Cost | Free | Free | Free | ~$0.43/h spot |
-| Speed | ~14.6 tok/s | TBD | ~23 tok/s | ~59 tok/s |
-| Tool calls | Broken | TBD | Working | Working |
+| Speed | ~14.6 tok/s | ~26.7 tok/s | ~23 tok/s | ~59 tok/s |
+| Tool calls | Broken | Untested | Working | Working |
 | Quantization | 8-bit | 4-bit | Default Q4 | FP16 |
 | Context | Limited by RAM | Limited by RAM | Limited by RAM | Limited by VRAM |
 
-Tested on M3 Max Pro 128GB, 2026-03-25.
+Tested on M3 Max Pro 128GB, 2026-03-25 (8-bit) and 2026-03-28 (4-bit).
 
 ## Troubleshooting
 
